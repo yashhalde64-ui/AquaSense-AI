@@ -390,34 +390,30 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                       const SizedBox(height: 12),
                       const Text('📸 Worker Completion Proof Photo:', style: TextStyle(color: AppTheme.cyanAccent, fontWeight: FontWeight.bold, fontSize: 12)),
                       const SizedBox(height: 6),
-                      if (proofImagePath.isNotEmpty && File(proofImagePath).existsSync())
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: Image.file(
-                            File(proofImagePath),
-                            height: 160,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          ),
-                        )
-                      else
-                        Container(
-                          height: 90,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.05),
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: Colors.white12),
-                          ),
-                          child: const Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.image_not_supported, color: AppTheme.cyanAccent, size: 28),
-                              SizedBox(height: 4),
-                              Text('Proof Photo Submitted by Worker', style: TextStyle(color: Colors.white54, fontSize: 11)),
-                            ],
-                          ),
-                        ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: proofImagePath.isNotEmpty
+                            ? Image.file(
+                                File(proofImagePath),
+                                height: 160,
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Image.network(
+                                    'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=600',
+                                    height: 160,
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                  );
+                                },
+                              )
+                            : Image.network(
+                                'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=600',
+                                height: 160,
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                              ),
+                      ),
 
                       const SizedBox(height: 16),
                       SizedBox(

@@ -73,7 +73,7 @@ class _RaiseComplaintScreenState extends State<RaiseComplaintScreen> {
       final user = Provider.of<UserProvider>(context, listen: false);
 
       setState(() {
-        _detectedLocation = "${user.area}, Thane (Lat: ${locationData.latitude!.toStringAsFixed(4)}, Lng: ${locationData.longitude!.toStringAsFixed(4)})";
+        _detectedLocation = "${user.area}, Thane (Lat: ${locationData.latitude.toStringAsFixed(4)}, Lng: ${locationData.longitude.toStringAsFixed(4)})";
         _isDetectingLocation = false;
       });
     } catch (e) {

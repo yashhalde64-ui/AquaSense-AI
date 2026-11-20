@@ -119,10 +119,19 @@ class _WorkerHomeScreenState extends State<WorkerHomeScreen> {
                       height: 50,
                       child: ElevatedButton(
                         onPressed: () async {
+                          if (proofImage == null) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Please upload a proof photo before submitting!'),
+                                backgroundColor: AppTheme.statusRed,
+                              ),
+                            );
+                            return;
+                          }
                           if (complaint['_id'] != null) {
                             await MongoDatabase.workerSubmitResolution(
                               complaintId: complaint['_id'].toHexString(),
-                              proofImagePath: proofImage?.path ?? '',
+                              proofImagePath: proofImage!.path,
                             );
                             Navigator.pop(context);
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -250,21 +259,19 @@ class _WorkerHomeScreenState extends State<WorkerHomeScreen> {
                                           Text(task['description'] ?? '', style: const TextStyle(color: Colors.white70, fontSize: 13)),
                                           const SizedBox(height: 16),
 
-                                          if (status == 'Assigned')
+                                          if (status == 'Assigned' || status == 'Awaiting Approval')
                                             SizedBox(
                                               width: double.infinity,
                                               height: 45,
                                               child: ElevatedButton.icon(
                                                 onPressed: () => _showCompleteTaskSheet(task),
                                                 icon: const Icon(Icons.check_circle_outline, color: Colors.white),
-                                                label: const Text('Complete & Upload Proof', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                                                label: Text(status == 'Assigned' ? 'Complete & Upload Proof' : 'Update Proof Photo', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                                                 style: ElevatedButton.styleFrom(backgroundColor: AppTheme.primaryBlue),
                                               ),
                                             )
-                                          else if (status == 'Awaiting Approval')
-                                            const Text('Submitted to Admin for Approval', style: TextStyle(color: AppTheme.cyanAccent, fontSize: 12, fontWeight: FontWeight.bold))
                                           else
-                                            const Text('Resolved & Approved', style: TextStyle(color: AppTheme.statusGreen, fontSize: 12, fontWeight: FontWeight.bold)),
+                                            const Text('Resolved & Approved', style: TextStyle(color: AppTheme.statusGreen, fontSize: 12, fontWeight:€™_resolved_and_approved' ? Colors.white : Colors.white)),
                                         ],
                                       ),
                                     ),

@@ -22,7 +22,7 @@ class AppTheme {
       colorScheme: const ColorScheme.dark(
         primary: primaryBlue,
         secondary: cyanAccent,
-        background: backgroundDark,
+        surface: backgroundDark,
       ),
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,

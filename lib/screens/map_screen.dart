@@ -39,7 +39,7 @@ class _MapScreenState extends State<MapScreen> {
     _getLocation();
   }
 
-  _getLocation() async {
+  Future<void> _getLocation() async {
     Timer(const Duration(seconds: 2), () {
       if (mounted && _isLoading) {
         setState(() => _isLoading = false);
@@ -59,9 +59,9 @@ class _MapScreenState extends State<MapScreen> {
 
       if (permissionGranted == PermissionStatus.granted) {
         LocationData locationData = await location.getLocation().timeout(const Duration(seconds: 3));
-        if (mounted && locationData.latitude != null && locationData.longitude != null) {
+        if (mounted) {
           setState(() {
-            _currentLocation = latlong.LatLng(locationData.latitude!, locationData.longitude!);
+            _currentLocation = latlong.LatLng(locationData.latitude, locationData.longitude);
             _isLoading = false;
           });
         }
@@ -70,9 +70,9 @@ class _MapScreenState extends State<MapScreen> {
       }
 
       location.onLocationChanged.listen((LocationData currentLocation) {
-        if (mounted && currentLocation.latitude != null && currentLocation.longitude != null) {
+        if (mounted) {
           setState(() {
-            _currentLocation = latlong.LatLng(currentLocation.latitude!, currentLocation.longitude!);
+            _currentLocation = latlong.LatLng(currentLocation.latitude, currentLocation.longitude);
           });
         }
       });
@@ -100,11 +100,9 @@ class _MapScreenState extends State<MapScreen> {
                 )
               : _useGoogleMaps 
                   ? gmaps.GoogleMap(
+                      style: _darkMapStyle,
                       onMapCreated: (controller) {
                         _gmapsController = controller;
-                        try {
-                          _gmapsController?.setMapStyle(_darkMapStyle);
-                        } catch (_) {}
                       },
                       initialCameraPosition: gmaps.CameraPosition(
                         target: gmaps.LatLng(_currentLocation.latitude, _currentLocation.longitude),

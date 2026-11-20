@@ -163,7 +163,7 @@ class _ReportScreenState extends State<ReportScreen> {
           Switch(
             value: _waterAvailable,
             onChanged: (val) => setState(() => _waterAvailable = val),
-            activeColor: AppTheme.cyanAccent,
+            activeThumbColor: AppTheme.cyanAccent,
           ),
         ],
       ),
