@@ -271,7 +271,7 @@ class _WorkerHomeScreenState extends State<WorkerHomeScreen> {
                                               ),
                                             )
                                           else
-                                            const Text('Resolved & Approved', style: TextStyle(color: AppTheme.statusGreen, fontSize: 12, fontWeight:€™_resolved_and_approved' ? Colors.white : Colors.white)),
+                                            const Text('Resolved & Approved', style: TextStyle(color: AppTheme.statusGreen, fontSize: 12, fontWeight: FontWeight.bold)),
                                         ],
                                       ),
                                     ),
